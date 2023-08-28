@@ -13,9 +13,6 @@ class User < ApplicationRecord
     before_validation :ensure_session_token
     validates :session_token, :username, presence: true, uniqueness: true
 
-
-
-
     def password=(password)
         self.password_digest = Bcrypt::Password.create(password)
         @password = password
@@ -35,7 +32,11 @@ class User < ApplicationRecord
         end
     end
 
-    
+    def reset_session_token!
+        self.session_token = SecureRandom.urlsafe_base64
+        self.save
+        self.session_token
+    end
 
     private
 
@@ -44,7 +45,6 @@ class User < ApplicationRecord
             session_token = SecureRandom.urlsafe_base64
             return session_token unless User.exists?(session_token: session_token)
         end
-        
     end
 
     def ensure_session_token
