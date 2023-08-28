@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+    before_action :require_logged_out!, only: %i(create new)
+
     def new
         render :new
     end
@@ -15,6 +17,6 @@ class SessionsController < ApplicationController
     end
 
     def destroy
-
+        logout!
     end
 end

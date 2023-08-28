@@ -16,6 +16,17 @@
       <h1><a href="<%= cats_url %>">99 Cats</a></h1>
     </nav>
     <main>
+      
+      <% if !logged_in? %>
+          <a href="<%= new_session_url %>">Sign in</a>
+          <a href="<%= new_user_url %>">Sign up</a>
+      <% else %>
+        <h1> Welcome <%= @current_user.username %> </h1>
+          <form action= "<% session_url %>"  method= "POST"> 
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value= "Log out" >
+          </form>
+      <% end %>
       <%= yield %>
     </main>
   </body>
