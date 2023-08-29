@@ -13,6 +13,12 @@ class User < ApplicationRecord
     before_validation :ensure_session_token
     validates :session_token, :username, presence: true, uniqueness: true
 
+    has_many :cats,
+        foreign_key: :owner_id,
+        class_name: :Cat,
+        dependent: :destroy,
+        inverse_of: :owner
+
     def password=(password)
         self.password_digest = BCrypt::Password.create(password)
         @password = password

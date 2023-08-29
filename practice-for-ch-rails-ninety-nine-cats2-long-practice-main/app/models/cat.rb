@@ -32,6 +32,10 @@ class Cat < ApplicationRecord
     class_name: :CatRentalRequest,
     dependent: :destroy
 
+  belongs_to :owner,
+    class_name: :User,
+    foreign_key: :owner_id
+
   def birth_date_cannot_be_future
     # Must check that birth_date is present because `>` will crash if run on
     # `nil`
