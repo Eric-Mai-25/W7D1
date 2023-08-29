@@ -14,7 +14,7 @@ class User < ApplicationRecord
     validates :session_token, :username, presence: true, uniqueness: true
 
     def password=(password)
-        self.password_digest = Bcrypt::Password.create(password)
+        self.password_digest = BCrypt::Password.create(password)
         @password = password
     end
 
